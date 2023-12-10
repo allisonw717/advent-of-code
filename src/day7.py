@@ -9,11 +9,15 @@ class hand:
     
     letters = {"A": 14, "K": 13, "Q": 12, "J": 11, "T": 10}
     
-    def __init__(self, cards, bid):
+    def __init__(self, cards, bid, joker = False):
+        self.joker = joker
         self.cards = [] 
         for card in cards:
             if card in self.letters.keys():
-                self.cards.append(self.letters[card])
+                if self.joker and card == 'J':
+                    self.cards.append(1)
+                else:
+                    self.cards.append(self.letters[card])
             else:
                 self.cards.append(int(card))
         self.bid = int(bid)
@@ -26,6 +30,8 @@ class hand:
     #five: 7, four:6, full:5, three:4, two:3, one:2, high:1
     def get_strengh(self):
         counts = sorted(Counter(self.cards).values(), reverse=True)
+        if self.joker and 1 in self.cards:
+             counts[0] += self.cards.count(1)
         if counts[0] == 5:
             return 7
         if counts[0] == 4:
@@ -48,14 +54,23 @@ class hand:
             return False
         return self.strength > other.strength
 
-
 hands = [] 
+joker_hands = [] 
 for line in lines:
     cards, bid = line.split()
     hands.append(hand(cards, bid))
+    joker_hands.append(hand(cards,bid,True))
 
+#PART 1
 winnings = 0 
 for i, hand in enumerate(sorted(hands)):
     winnings += hand.bid * (i + 1)
 
+#PART 2
+winnings_with_joker = 0 
+for i, hand in enumerate(sorted(joker_hands)):
+    print(hand)
+    winnings_with_joker += hand.bid * (i + 1)
+
 print(winnings)
+print(winnings_with_joker)
