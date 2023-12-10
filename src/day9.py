@@ -10,16 +10,16 @@ def get_next(nums):
     if nums[0] == 0 and len(set(nums)) == 1: 
         return 0 
     next_list = [] 
-    for i in range(len(nums) - 1,0, -1):
-        next_list.insert(0, nums[i] - nums[i-1])
+    for i in range(0, len(nums) - 1):
+        next_list.append(nums[i+1] - nums[i])
     return nums[-1] + get_next(next_list)
 
 def get_first(nums):
     if nums[0] == 0 and len(set(nums)) == 1: 
         return 0 
     next_list = [] 
-    for i in range(len(nums) - 1,0, -1):
-        next_list.insert(0, nums[i] - nums[i-1])
+    for i in range(0, len(nums) - 1):
+        next_list.append(nums[i+1] - nums[i])
     return nums[0] - get_first(next_list) 
 
 sum = 0 
