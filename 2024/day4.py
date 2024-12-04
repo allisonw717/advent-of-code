@@ -56,3 +56,42 @@ for line in input:
 count += count_cols(other_diagonal)
 
 print("TOTAL: " + str(count))
+
+
+#Part 2 is a different problem :| 
+def is_x_mas(grid, i,j):
+    a = ""
+    b = ""
+    a += grid[i-1][j-1]
+    a += grid[i][j]
+    a += grid[i+1][j+1]
+    b += grid[i+1][j-1]
+    b += grid[i][j]
+    b += grid[i-1][j+1]
+    
+    if (a == "MAS" or a == "SAM") and (b == "MAS" or b == "SAM"):
+        return True
+    return False
+
+char_matrix = [] 
+for row in input:
+    char_matrix.append(list(row.strip()))
+
+#check the inside for A's 
+count2 = 0 
+countA = 0 
+for i, row in enumerate(char_matrix):
+    for j, col in enumerate(row):
+        if char_matrix[i][j] == 'A':
+            countA += 1
+            try:
+                if is_x_mas(char_matrix,i,j) and i!=0 and j!=0 and i!= len(row)-1 and j!=len(char_matrix)-1:
+                    count2 += 1
+            except:
+                break
+
+print("TOTAL2: " + str(count2))
+print(countA)
+
+
+#1850 < ans < 1912
